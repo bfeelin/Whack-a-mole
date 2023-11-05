@@ -3,32 +3,50 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+type Tile = {
+  id: number;
+  active: boolean;
+};
 
+function App() {
+  const NO_TILES:number = 9
+  const initialData:Array<Tile> = []
+  
+  for(let i = 0; i < NO_TILES; i++){
+    initialData.push({id: i, active: false})
+  }
+  return (
+    <WhackAMole initialData={initialData}/>
+  )
+}
+
+function WhackAMole({initialData}: {initialData:Array<Tile>}){
+  const [score, setScore] = useState<number>(0)
+  const [tiles, setTiles] = useState(initialData)
+
+  function handleIncrementScore(tileID:number){
+    let newTiles = [...tiles]
+    newTiles[tileID] = {...newTiles[tileID], active: false}
+    setTiles(newTiles)
+    let s = score
+    setScore(s++)
+  }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <p>Score: {score}</p>
+      <div className='grid-wrapper'>
+        {tiles?.map((tile) => (
+          <Tile id={tile.id} active={tile.active} handleIncrementScore={handleIncrementScore}/>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
+  )
+}
+
+function Tile({ id, active, handleIncrementScore }: { id: number, active: boolean, handleIncrementScore: Function }){
+  return(
+    <div onClick={active ? () => handleIncrementScore(id) : () => {}} key={id} className={active ? 'mole tile' : 'hole tile'}>
+    </div>
   )
 }
 
