@@ -40,3 +40,26 @@
 .read-the-docs {
   color: #888;
 }
+
+.grid-wrapper{
+  display: grid;
+  grid-template-columns: repeat(3, 3fr);
+  gap: 10px;
+}
+
+.tile{
+  height: 200px;
+  width: 200px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.hole{
+  background-image: url('src/assets/hole.png');
+}
+
+.mole{
+  background-image: url('src/assets/mole.png')
+
+}
+
