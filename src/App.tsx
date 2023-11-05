@@ -27,8 +27,7 @@ function WhackAMole({initialData}: {initialData:Array<boolean>}){
 
   useEffect(() => {
     const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
-      let randomTile = getRandomArbitrary(0, 8);
-      console.log(randomTile)
+      let randomTile = getRandomWholeNumber(0, 8);
       let newTiles = tiles?.map((tile, i) => (
           randomTile === i ? true : false
       ))
@@ -36,10 +35,9 @@ function WhackAMole({initialData}: {initialData:Array<boolean>}){
     }, delay)
   
     return () => clearInterval(intervalId); //This is important
-   
   }, [])
 
-  function getRandomArbitrary(min:number, max:number) {
+  function getRandomWholeNumber(min:number, max:number) {
     return Math.round(Math.random() * (max - min) + min);
   }
 
@@ -48,8 +46,7 @@ function WhackAMole({initialData}: {initialData:Array<boolean>}){
     let newTiles = [...tiles]
     newTiles[tileID] = false
     setTiles(newTiles)
-    let s = score + 1
-    setScore(s)
+    setScore(score + 1)
   }
   return (
     <>
